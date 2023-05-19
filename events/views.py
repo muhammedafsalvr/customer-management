@@ -1,6 +1,6 @@
 import json
 
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponseRedirect
 from django.urls import reverse
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
@@ -85,6 +85,14 @@ def edit_event(request, pk):
     }
     return render(request, 'events/edit.html', context)
 
+
+@login_required(login_url='/users/login/')
+def delete_event(request, pk):
+    Event.objects.filter(pk=pk).update(
+        is_deleted=True,
+    )
+    return HttpResponseRedirect(reverse('web:index'))
+    
 
 @login_required(login_url="/users/login/")
 def my_events(request):
