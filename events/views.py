@@ -6,6 +6,8 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 
 from events.forms import EventForm
+from events.models import Event
+
 from web.functions import generate_form_errors
 
 # Create your views here.
@@ -49,3 +51,36 @@ def create_event(request):
         return render(request, "events/create.html", context=context)
         
         
+@login_required(login_url='/users/login/')
+def edit_event(request, pk):
+    instance = Event.objects.get(pk=pk)
+    if request.method == "POST":
+        form = EventForm(request.POST, instance=instance)
+        if form.is_valid():
+            data = form.save(commit=False)
+            data.save()
+
+            response_data = {
+                "status": "success",
+                "title": "Successfully Updated",
+                "message": "Event Updated Successfully.",
+                "redirect": 'true',
+                "redirect_url": reverse('web:index')
+            }
+        else:
+            message = generate_form_errors(form)
+            response_data = {
+                "status": "false",
+                "title": "Failed",
+                "message": message
+            }
+        return HttpResponse(json.dumps(response_data), content_type='application/javascript')
+
+    form = EventForm(instance=instance)
+
+    context = {
+        "title": "Edit Event",
+        'form': form,
+        'instance':instance,
+    }
+    return render(request, 'events/edit.html', context)
