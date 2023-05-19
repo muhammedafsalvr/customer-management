@@ -14,8 +14,7 @@
 
 @font-face {
     font-family: "ibm_plex_sans_thai_loopedbold";
-    src: url("../fonts/ibmplexsansthailooped-bold-webfont.woff2")
-            format("woff2"),
+    src: url("../fonts/ibmplexsansthailooped-bold-webfont.woff2") format("woff2"),
         url("../fonts/ibmplexsansthailooped-bold-webfont.woff") format("woff");
     font-weight: normal;
     font-style: normal;
@@ -23,17 +22,15 @@
 
 @font-face {
     font-family: "ibm_plex_sans_thai_loopedRg";
-    src: url("../fonts/ibmplexsansthailooped-regular-webfont.woff2")
-            format("woff2"),
-        url("../fonts/ibmplexsansthailooped-regular-webfont.woff")
-            format("woff");
+    src: url("../fonts/ibmplexsansthailooped-regular-webfont.woff2") format("woff2"),
+        url("../fonts/ibmplexsansthailooped-regular-webfont.woff") format("woff");
     font-weight: normal;
     font-style: normal;
 }
 
 section.container {
     min-height: 100vh;
-
+    
     display: flex;
     align-items: top;
     justify-content: center;
@@ -63,23 +60,13 @@ section.container section.form_container div.bottom form div.input_container {
     margin-bottom: 20px;
 }
 
-section.container
-    section.form_container
-    div.bottom
-    form
-    div.input_container
-    label {
+section.container section.form_container div.bottom form div.input_container label {
     display: block;
     color: #fff;
     margin-bottom: 5px;
 }
 
-section.container
-    section.form_container
-    div.bottom
-    form
-    div.input_container
-    input {
+section.container section.form_container div.bottom form div.input_container input {
     display: block;
     width: 100%;
     background: none;
@@ -96,12 +83,7 @@ section.container section.form_container div.bottom form div.submit_container {
     flex-wrap: wrap;
 }
 
-section.container
-    section.form_container
-    div.bottom
-    form
-    div.submit_container
-    button {
+section.container section.form_container div.bottom form div.submit_container button {
     padding: 8px 20px;
     background: #609ab6;
     color: #fff;
@@ -113,12 +95,7 @@ section.container
     cursor: pointer;
 }
 
-section.container
-    section.form_container
-    div.bottom
-    form
-    div.submit_container
-    a {
+section.container section.form_container div.bottom form div.submit_container a {
     padding: 8px 20px;
     color: #fff;
     font-size: 16px;
@@ -127,12 +104,7 @@ section.container
     border: none;
 }
 
-section.container
-    section.form_container
-    div.bottom
-    form
-    div.submit_container
-    p.error-message,
+section.container section.form_container div.bottom form div.submit_container p.error-message,
 section.form_container div.bottom form div.submit_container .errorlist {
     color: #999;
     width: 100%;
