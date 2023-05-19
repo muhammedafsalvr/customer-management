@@ -1,8 +1,20 @@
+from datetime import datetime, timedelta
+
 from django.shortcuts import render
-from django.http import HttpResponse
-from django.contrib.auth.decorators import login_required
+from django.http.response import HttpResponse
+
+from events.models import Event
+from users.models import Customer
 
 
-@login_required(login_url='/users/login/')
 def index(request):
-    return HttpResponse("Hello, world!")
+    events = Event.objects.filter(is_deleted=False,single_time=True)
+    customers = Customer.objects.all()
+
+    context = {
+        "title": "Home Page",
+        "events": events,
+        "customers": customers,
+
+    }
+    return render(request, 'web/index.html', context=context)
