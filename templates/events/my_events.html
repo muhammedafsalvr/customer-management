@@ -1,0 +1,28 @@
+{% extends 'base.html' %} {% block content %} {% load static%}
+<section id="edit-post-home">
+    <section class="wrapper">
+        {% include 'includes/header.html' %}
+        <div class="content">
+            {% for event in events %}
+            <a
+                style="color: #000; text-decoration: none"
+                href="{% url 'events:edit_event' pk=event.pk %}"
+            >
+                <div class="card" style="width: 20rem; margin-bottom: 15px">
+                    <img
+                        src="{{event.image.url}}"
+                        class="card-img-top"
+                        alt="..."
+                    />
+                    <div class="card-body">
+                        <h6 class="card-title">{{event.brand}}</h6>
+                        <h5 class="card-title fw-bold">{{event.title}}</h5>
+                        <p class="card-text">{{event.description}}</p>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </section>
+</section>
+{% endblock %}

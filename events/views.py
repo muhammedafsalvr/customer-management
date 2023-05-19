@@ -84,3 +84,14 @@ def edit_event(request, pk):
         'instance':instance,
     }
     return render(request, 'events/edit.html', context)
+
+
+@login_required(login_url="/users/login/")
+def my_events(request):
+    instances = Event.objects.filter( is_deleted=False)
+
+    context = {
+        "title": "My Products",
+        "events": instances
+    }
+    return render(request, "events/my_events.html", context=context)
