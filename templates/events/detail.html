@@ -1,0 +1,23 @@
+{% extends 'base.html' %} {% block content %} {% load static%}
+<section id="home">
+    <section class="wrapper">
+        {% include 'web/includes/header.html' %}
+        <section class="spotlight">
+            <div class="left">
+                <img src="{{instances.image.url}}" alt="image" />
+            </div>
+            <div class="right">
+                <h2>{{instances.title}}</h2>
+                <h6>{{instances.event_type}}</h6>
+                <p>{{instances.event_date}}</p>
+                {% if instances.single_time %}
+                <small>singletime:Yes</small>
+                {% else %}
+                <small>singletime:NO</small>
+
+                {% endif %}
+            </div>
+        </section>
+    </section>
+</section>
+{% endblock %}

@@ -73,7 +73,11 @@
                     <input class="submit" type="submit" value="Submit" />
                 </div>
             </form>
-            <a href="" class="button delete">Delete</a>
+            <a
+                href="{% url 'events:delete_event' pk=instance.pk %}"
+                class="button delete"
+                >Delete</a
+            >
         </section>
     </section>
 </section>

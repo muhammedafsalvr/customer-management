@@ -1,6 +1,6 @@
 import json
 
-from django.shortcuts import render, HttpResponseRedirect
+from django.shortcuts import render,get_object_or_404,render, HttpResponseRedirect
 from django.urls import reverse
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
@@ -103,3 +103,13 @@ def my_events(request):
         "events": instances
     }
     return render(request, "events/my_events.html", context=context)
+
+
+@login_required(login_url='/users/login/')
+def detail_event(request, pk):
+    instances = get_object_or_404(Event.objects.filter(pk=pk))
+    context={
+        "instances": instances,
+        "title":"Detail | Events"
+     }  
+    return render(request,"posts/detail.html",context=context)
