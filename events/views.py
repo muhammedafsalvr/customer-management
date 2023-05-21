@@ -51,6 +51,7 @@ def create_event(request):
         return render(request, "events/create.html", context=context)
         
         
+        
 @login_required(login_url='/users/login/')
 def edit_event(request, pk):
     instance = Event.objects.get(pk=pk)
@@ -96,7 +97,8 @@ def delete_event(request, pk):
 
 @login_required(login_url="/users/login/")
 def my_events(request):
-    instances = Event.objects.filter( is_deleted=False)
+    instances = Event.objects.filter( is_deleted=False,customer__user=request.user)
+    print(instances)
 
     context = {
         "title": "My Products",
@@ -112,4 +114,4 @@ def detail_event(request, pk):
         "instances": instances,
         "title":"Detail | Events"
      }  
-    return render(request,"posts/detail.html",context=context)
+    return render(request,"events/detail.html",context=context)

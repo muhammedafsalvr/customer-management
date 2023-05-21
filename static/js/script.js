@@ -99,7 +99,7 @@ $(document).on("click", ".action-button", function (e) {
                             Swal.fire(title, message, "error");
 
                             if (stable != "true") {
-                                window.setTimeout(function () {}, 2000);
+                                window.setTimeout(function () { }, 2000);
                             }
                         }
                     },
@@ -203,7 +203,7 @@ $(document).on("submit", "form.ajax", function (e) {
                 Swal.fire(title, message, "error");
 
                 if (stable != "true") {
-                    window.setTimeout(function () {}, 2000);
+                    window.setTimeout(function () { }, 2000);
                 }
                 document.onkeydown = function (evt) {
                     return true;

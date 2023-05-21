@@ -11,7 +11,7 @@
                         {% for event in events %}
                         <li>
                             <a
-                                href=""
+                                href="{% url 'events:detail_event' pk=event.pk %}"
                             >
                                 {% if event.image %}
                                 <div class="blog-image">

@@ -20,6 +20,7 @@ class Event(models.Model):
     event_date = models.DateField(max_length=64)
     single_time = models.BooleanField(default=True)
     is_deleted=models.BooleanField(default=False)
+    customer=models.ForeignKey("users.Customer",on_delete=models.CASCADE,blank=True,null=True)
 
     def __str__(self):
         return self.title
