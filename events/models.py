@@ -17,7 +17,7 @@ class Event(models.Model):
     title = models.CharField(max_length=255)
     image = models.FileField(upload_to='events/')
     event_type = models.CharField(max_length=255 ,choices=CHOICES)
-    event_date = models.DateField(max_length=64)
+    event_date = models.DateField()
     single_time = models.BooleanField(default=True)
     is_deleted=models.BooleanField(default=False)
     customer=models.ForeignKey("users.Customer",on_delete=models.CASCADE,blank=True,null=True)

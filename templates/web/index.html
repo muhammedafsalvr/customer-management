@@ -2,7 +2,6 @@
 <section id="home">
     <section class="wrapper">
         {% include 'includes/header.html' %}
-
         <section class="spotlight">
             <h3>Events</h3>
             <div class="all-posts">
@@ -35,7 +34,8 @@
                     </ul>
                 </div>
                 <div class="filter-section" id="hamburger-menu">
-                    <form action="">
+                    <form method="POST" action=".">
+                        {% csrf_token %}
                         <p class="filter-head">Sort by</p>
                         <div class="filter">
                             <label class="radio">
@@ -60,7 +60,7 @@
                             <label class="checkbox">
                                 <input
                                     type="checkbox"
-                                    value="{{customer.id}}"
+                                    value="{{customer.user}}"
                                     name="customer"
                                 />
                                 <span class="label"
@@ -70,7 +70,7 @@
                             {% endfor %}
                         </div>
 
-                        <input type="submit" value="Filter" />
+                        <input type="submit"  />
                     </form>
                 </div>
             </div>

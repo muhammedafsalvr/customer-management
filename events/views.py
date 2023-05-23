@@ -1,45 +1,57 @@
 import json
 
-from django.shortcuts import render,get_object_or_404,render, HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404, render, HttpResponseRedirect
 from django.urls import reverse
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 
 from events.forms import EventForm
 from events.models import Event
+from users.models import Customer
 
 from web.functions import generate_form_errors
 
 # Create your views here.
+
+
 @login_required(login_url='/users/login/')
 def create_event(request):
 
     if request.method == 'POST':
         form = EventForm(request.POST, request.FILES)
         if form.is_valid():
+            if Customer.objects.filter(user=request.user).exists():
+                print(form)
+                event = form.save(commit=False)
+                event.customer = Customer.objects.get(user=request.user)
+                event.save()
 
-            print(form.cleaned_data)
-            form.save()
-            
-            
+                response_data = {
+                    "status": "success",
+                    "title": "Success",
+                    "message": "Submitted successfully",
+                    "redirect": 'true',
+                    "redirect_url": reverse('web:index')
+                }
+                return HttpResponse(json.dumps(response_data), content_type='application/javascript')
+            else:
+                print(generate_form_errors(form))
+                response_data = {
+                    "status": "false",
+                    "title": "Failed",
+                    "message": "user not exist",
+                }
+
+                return HttpResponse(json.dumps(response_data), content_type='application/javascript')
+        else:
+            print(generate_form_errors(form))
             response_data = {
-                "status": "success",
-                "title": "Success",
-                "message": "Submitted successfully",
-                "redirect": 'true',
-                "redirect_url": reverse('web:index')
+                "status": "false",
+                "title": "Failed",
+                "message": generate_form_errors(form),
             }
 
             return HttpResponse(json.dumps(response_data), content_type='application/javascript')
-        
-        print(generate_form_errors(form))
-        response_data = {
-            "status": "false",
-            "title": "Failed",
-            "message": generate_form_errors(form),
-        }
-
-        return HttpResponse(json.dumps(response_data), content_type='application/javascript')
 
     else:
 
@@ -49,9 +61,8 @@ def create_event(request):
             "form": form
         }
         return render(request, "events/create.html", context=context)
-        
-        
-        
+
+
 @login_required(login_url='/users/login/')
 def edit_event(request, pk):
     instance = Event.objects.get(pk=pk)
@@ -82,7 +93,7 @@ def edit_event(request, pk):
     context = {
         "title": "Edit Event",
         'form': form,
-        'instance':instance,
+        'instance': instance,
     }
     return render(request, 'events/edit.html', context)
 
@@ -93,15 +104,16 @@ def delete_event(request, pk):
         is_deleted=True,
     )
     return HttpResponseRedirect(reverse('web:index'))
-    
+
 
 @login_required(login_url="/users/login/")
 def my_events(request):
-    instances = Event.objects.filter( is_deleted=False,customer__user=request.user)
-    print(instances)
+    customer = get_object_or_404(Customer, user=request.user)
+
+    instances = Event.objects.filter(is_deleted=False, customer=customer)
 
     context = {
-        "title": "My Products",
+        "title": "My Events",
         "events": instances
     }
     return render(request, "events/my_events.html", context=context)
@@ -110,8 +122,8 @@ def my_events(request):
 @login_required(login_url='/users/login/')
 def detail_event(request, pk):
     instances = get_object_or_404(Event.objects.filter(pk=pk))
-    context={
+    context = {
         "instances": instances,
-        "title":"Detail | Events"
-     }  
-    return render(request,"events/detail.html",context=context)
+        "title": "Detail | Events"
+    }
+    return render(request, "events/detail.html", context=context)
